@@ -41,6 +41,7 @@ class TaskApp(Adw.Application):
         from task_window import TaskWindow
 
         self._window = TaskWindow(self)
+        self._window.connect("close-request", self._on_window_close_request)
         self._window.present()
 
         reminders.start()
@@ -114,6 +115,12 @@ class TaskApp(Adw.Application):
                 self._tray_proc.stdin.flush()
             except Exception:
                 pass
+
+    def _on_window_close_request(self, window):
+        if self._tray_proc:
+            window.hide()
+            return True  # suppress destroy
+        return False  # no tray — let the window close and the app quit normally
 
     def _cleanup_tray(self):
         if self._tray_watch_id:
