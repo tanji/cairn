@@ -99,6 +99,8 @@ class SettingsDialog(Adw.PreferencesDialog):
         days_row.set_activatable_widget(btn_box)
         days_group.add(days_row)
 
+
+
     def _on_time_changed(self, *_):
         hour = int(self._hour_spin.get_value())
         minute = int(self._minute_spin.get_value())

@@ -8,6 +8,7 @@ from datetime import date
 from gi.repository import Adw, Gio, GLib, Gtk
 
 import database
+import reminders
 from models import TaskObject
 from task_editor import TaskEditorDialog
 from settings_dialog import SettingsDialog
@@ -44,6 +45,7 @@ class TaskWindow(Adw.ApplicationWindow):
         # Hamburger menu
         menu = Gio.Menu()
         menu.append("Settings", "win.settings")
+        menu.append("Preview Notifications", "win.preview-notifications")
         menu.append("Export History to CSV", "win.export-csv")
         menu.append("About", "win.about")
 
@@ -153,6 +155,10 @@ class TaskWindow(Adw.ApplicationWindow):
         settings_action = Gio.SimpleAction.new("settings", None)
         settings_action.connect("activate", self._on_settings)
         self.add_action(settings_action)
+
+        preview_action = Gio.SimpleAction.new("preview-notifications", None)
+        preview_action.connect("activate", lambda *_: reminders.fire_preview())
+        self.add_action(preview_action)
 
         export_action = Gio.SimpleAction.new("export-csv", None)
         export_action.connect("activate", self._on_export_csv)
@@ -291,10 +297,13 @@ class TaskWindow(Adw.ApplicationWindow):
         about = Adw.AboutDialog(
             application_name="Cairn",
             version="1.0.0",
-            developer_name="cairn",
+            developer_name="Guillaume Lefranc",
+            developers=["Guillaume Lefranc (tanji) https://github.com/tanji"],
             license_type=Gtk.License.MIT_X11,
             comments="A simple GNOME task manager.",
-            application_icon="cairn",
+            website="https://github.com/tanji/cairn",
+            issue_url="https://github.com/tanji/cairn/issues",
+            application_icon="io.github.cairn",
         )
         about.present(self)
 

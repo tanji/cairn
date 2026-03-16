@@ -1,5 +1,6 @@
 """Reminder scheduler using GLib timers and libnotify."""
 
+import os
 from datetime import date, datetime, timedelta
 
 import gi
@@ -8,6 +9,11 @@ gi.require_version("Notify", "0.7")
 from gi.repository import GLib, Notify
 
 import database
+
+_ICON = os.path.join(os.path.dirname(__file__), "icons", "cairn-hicolor", "hicolor", "96x96", "apps", "io.github.cairn.png")
+# Fall back to installed icon name if running from a system install
+if not os.path.exists(_ICON):
+    _ICON = "io.github.cairn"
 
 _timer_id: int | None = None
 # Set of (date, task_id, slot_index) tuples that have already fired today.
@@ -79,26 +85,57 @@ def _check_reminders() -> bool:
     return GLib.SOURCE_CONTINUE
 
 
+def _bucket_tasks(tasks) -> tuple[list, list, list, list]:
+    """Split tasks into due today, this week, this month, and later."""
+    today = date.today()
+    week_end = today + timedelta(days=7)
+    month_end = today + timedelta(days=30)
+
+    due_today, due_week, due_month, due_later = [], [], [], []
+    for t in tasks:
+        if not t["deadline"]:
+            due_later.append(t)
+            continue
+        try:
+            d = date.fromisoformat(t["deadline"])
+        except ValueError:
+            due_later.append(t)
+            continue
+        if d <= today:
+            due_today.append(t)
+        elif d <= week_end:
+            due_week.append(t)
+        elif d <= month_end:
+            due_month.append(t)
+        else:
+            due_later.append(t)
+    return due_today, due_week, due_month, due_later
+
+
 def _fire_notifications(tasks) -> None:
     try:
         if not Notify.is_initted():
             Notify.init("Cairn")
 
-        if len(tasks) == 1:
-            task = tasks[0]
-            body = task["project"] if task["project"] else ""
-            if task["deadline"]:
-                body = (body + f"\nDeadline: {task['deadline']}").strip()
-            n = Notify.Notification.new(task["name"], body or None, "task-due")
-        else:
-            names = "\n".join(f"• {t['name']}" for t in tasks)
-            n = Notify.Notification.new(
-                f"{len(tasks)} tasks due today",
-                names,
-                "task-due",
-            )
-        n.set_urgency(Notify.Urgency.CRITICAL)
-        n.show()
+        due_today, due_week, due_month, due_later = _bucket_tasks(tasks)
+
+        sections = [
+            ("Due today", due_today),
+            ("Due this week", due_week),
+            ("Due this month", due_month),
+            ("Coming up", due_later),
+        ]
+
+        non_empty = [(label, bucket) for label, bucket in sections if bucket]
+
+        if not non_empty:
+            return
+
+        for label, bucket in non_empty:
+            names = ", ".join(t["name"] for t in bucket)
+            n = Notify.Notification.new(label, names, _ICON)
+            n.set_urgency(Notify.Urgency.CRITICAL)
+            n.show()
     except Exception as e:
         print(f"[reminders] notification error: {e}")
 
@@ -110,6 +147,15 @@ def start() -> None:
     _timer_id = GLib.timeout_add_seconds(60, _check_reminders)
 
 
+def fire_preview() -> None:
+    """Fire notifications for all reminder-enabled tasks, ignoring time/day constraints."""
+    tasks = database.get_reminder_tasks()
+    if tasks:
+        _fire_notifications(tasks)
+
+
 def reschedule() -> None:
     _fired.clear()
     start()
+
+
