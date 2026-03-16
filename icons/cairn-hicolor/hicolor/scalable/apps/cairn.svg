@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Warm stone gradient for each rock -->
+    <linearGradient id="stone1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#b8a89a"/>
+      <stop offset="100%" style="stop-color:#7a6558"/>
+    </linearGradient>
+    <linearGradient id="stone2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c9b8a8"/>
+      <stop offset="100%" style="stop-color:#8a7468"/>
+    </linearGradient>
+    <linearGradient id="stone3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a89888"/>
+      <stop offset="100%" style="stop-color:#6a5a50"/>
+    </linearGradient>
+    <linearGradient id="stone4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4c4b0"/>
+      <stop offset="100%" style="stop-color:#9a8878"/>
+    </linearGradient>
+    <linearGradient id="stone5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#bfae9e"/>
+      <stop offset="100%" style="stop-color:#7e6e62"/>
+    </linearGradient>
+    <!-- Soft drop shadow filter -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#3a2e28" flood-opacity="0.35"/>
+    </filter>
+    <filter id="shadowSm" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#3a2e28" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Ground shadow -->
+  <ellipse cx="64" cy="115" rx="34" ry="5" fill="#3a2e28" opacity="0.18"/>
+
+  <!-- Stone 1 — base, widest, slight tilt left -->
+  <ellipse cx="64" cy="108" rx="32" ry="10"
+           fill="url(#stone1)" stroke="#5a4a40" stroke-width="0.8"
+           filter="url(#shadow)"
+           transform="rotate(-2, 64, 108)"/>
+  <!-- highlight -->
+  <ellipse cx="58" cy="104" rx="16" ry="4" fill="white" opacity="0.12" transform="rotate(-2,58,104)"/>
+
+  <!-- Stone 2 — wide, tilt right -->
+  <ellipse cx="65" cy="92" rx="25" ry="8.5"
+           fill="url(#stone2)" stroke="#6a5848" stroke-width="0.8"
+           filter="url(#shadowSm)"
+           transform="rotate(3, 65, 92)"/>
+  <ellipse cx="60" cy="88.5" rx="13" ry="3.5" fill="white" opacity="0.13" transform="rotate(3,60,88.5)"/>
+
+  <!-- Stone 3 — medium, tilt left -->
+  <ellipse cx="63" cy="78" rx="19" ry="7.5"
+           fill="url(#stone3)" stroke="#5e4e44" stroke-width="0.8"
+           filter="url(#shadowSm)"
+           transform="rotate(-4, 63, 78)"/>
+  <ellipse cx="58" cy="74.5" rx="10" ry="3" fill="white" opacity="0.14" transform="rotate(-4,58,74.5)"/>
+
+  <!-- Stone 4 — narrower, slight tilt right -->
+  <ellipse cx="64" cy="65" rx="14" ry="6.5"
+           fill="url(#stone4)" stroke="#6e5e52" stroke-width="0.8"
+           filter="url(#shadowSm)"
+           transform="rotate(2, 64, 65)"/>
+  <ellipse cx="60" cy="62" rx="7" ry="2.5" fill="white" opacity="0.15" transform="rotate(2,60,62)"/>
+
+  <!-- Stone 5 — top, small, tilt left -->
+  <ellipse cx="63" cy="54" rx="9" ry="5.5"
+           fill="url(#stone5)" stroke="#6a5a50" stroke-width="0.8"
+           filter="url(#shadowSm)"
+           transform="rotate(-3, 63, 54)"/>
+  <ellipse cx="60" cy="51.5" rx="4.5" ry="2" fill="white" opacity="0.18" transform="rotate(-3,60,51.5)"/>
+
+  <!-- Capstone — small rounded pebble on top -->
+  <ellipse cx="64" cy="44" rx="6" ry="4.5"
+           fill="url(#stone4)" stroke="#6a5a50" stroke-width="0.7"
+           filter="url(#shadowSm)"
+           transform="rotate(5, 64, 44)"/>
+  <ellipse cx="62" cy="42" rx="3" ry="1.5" fill="white" opacity="0.2" transform="rotate(5,62,42)"/>
+</svg>
