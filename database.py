@@ -166,6 +166,11 @@ def delete_task(task_id: int) -> None:
         conn.execute("DELETE FROM tasks WHERE id=?", (task_id,))
 
 
+def set_task_reminder(task_id: int, enabled: bool) -> None:
+    with get_connection() as conn:
+        conn.execute("UPDATE tasks SET reminder=? WHERE id=?", (int(enabled), task_id))
+
+
 # --- Projects ---
 
 def get_projects() -> list[str]:

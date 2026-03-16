@@ -235,12 +235,17 @@ class TaskWindow(Adw.ApplicationWindow):
                 except ValueError:
                     pass
 
-            # Bell icon if reminder on
+            # Reminder toggle button
             if task.reminder:
-                bell = Gtk.Image.new_from_icon_name("appointment-missed-symbolic")
-                bell.set_tooltip_text("Reminder set")
-                bell.set_valign(Gtk.Align.CENTER)
-                row.add_suffix(bell)
+                reminder_btn = Gtk.Button(icon_name="alarm-symbolic")
+                reminder_btn.set_tooltip_text("Reminder enabled — click to disable")
+            else:
+                reminder_btn = Gtk.Button(icon_name="appointment-missed-symbolic")
+                reminder_btn.set_tooltip_text("Reminder disabled — click to enable")
+            reminder_btn.add_css_class("flat")
+            reminder_btn.set_valign(Gtk.Align.CENTER)
+            reminder_btn.connect("clicked", self._on_toggle_reminder, task)
+            row.add_suffix(reminder_btn)
 
             # Edit button
             edit_btn = Gtk.Button(icon_name="document-edit-symbolic")
@@ -269,6 +274,10 @@ class TaskWindow(Adw.ApplicationWindow):
         elif not check.get_active() and task.completed:
             database.uncomplete_task(task.id)
             self.refresh()
+
+    def _on_toggle_reminder(self, btn, task: TaskObject):
+        database.set_task_reminder(task.id, not task.reminder)
+        self.refresh()
 
     def _on_new_task(self, *_):
         dialog = TaskEditorDialog()
