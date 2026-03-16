@@ -86,7 +86,7 @@ def main():
 
     _indicator = AppIndicator3.Indicator.new(
         "cairn",
-        "cairn",
+        "checkbox-checked-symbolic",
         AppIndicator3.IndicatorCategory.APPLICATION_STATUS,
     )
     _indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)

@@ -5,7 +5,13 @@ import sqlite3
 from datetime import datetime
 from pathlib import Path
 
-DB_DIR = Path.home() / ".local" / "share" / "cairn"
+def _get_db_dir() -> Path:
+    xdg = os.environ.get("XDG_DATA_HOME")
+    if xdg:
+        return Path(xdg) / "cairn"
+    return Path.home() / ".local" / "share" / "cairn"
+
+DB_DIR = _get_db_dir()
 DB_PATH = DB_DIR / "tasks.db"
 
 SCHEMA = """

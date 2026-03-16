@@ -31,11 +31,12 @@ class TaskApp(Adw.Application):
             self._window.present()
             return
 
-        # Register the bundled icons so GTK finds "cairn" by name
-        icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
-        icon_theme.add_search_path(
-            os.path.join(os.path.dirname(__file__), "icons", "cairn-hicolor", "hicolor")
-        )
+        # Register bundled icons only when running from the source tree.
+        # When installed, GTK finds cairn via the standard hicolor path automatically.
+        _icons_dir = os.path.join(os.path.dirname(__file__), "icons", "cairn-hicolor", "hicolor")
+        if os.path.isdir(_icons_dir):
+            icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
+            icon_theme.add_search_path(_icons_dir)
 
         from task_window import TaskWindow
 
