@@ -47,6 +47,7 @@ class TaskWindow(Adw.ApplicationWindow):
         menu.append("Settings", "win.settings")
         menu.append("Preview Notifications", "win.preview-notifications")
         menu.append("Export History to CSV", "win.export-csv")
+        menu.append("Clear History", "win.clear-history")
         menu.append("About", "win.about")
 
         menu_btn = Gtk.MenuButton(
@@ -160,6 +161,10 @@ class TaskWindow(Adw.ApplicationWindow):
         preview_action.connect("activate", lambda *_: reminders.fire_preview())
         self.add_action(preview_action)
 
+        clear_history_action = Gio.SimpleAction.new("clear-history", None)
+        clear_history_action.connect("activate", self._on_clear_history)
+        self.add_action(clear_history_action)
+
         export_action = Gio.SimpleAction.new("export-csv", None)
         export_action.connect("activate", self._on_export_csv)
         self.add_action(export_action)
@@ -264,6 +269,16 @@ class TaskWindow(Adw.ApplicationWindow):
             del_btn.connect("clicked", self._on_delete_task, task)
             row.add_suffix(del_btn)
 
+        else:
+            # Delete button for history rows
+            del_btn = Gtk.Button(icon_name="user-trash-symbolic")
+            del_btn.set_tooltip_text("Delete from history")
+            del_btn.add_css_class("flat")
+            del_btn.add_css_class("destructive-action")
+            del_btn.set_valign(Gtk.Align.CENTER)
+            del_btn.connect("clicked", self._on_delete_task, task)
+            row.add_suffix(del_btn)
+
         return row
 
     def _on_check_toggled(self, check: Gtk.CheckButton, task: TaskObject):
@@ -274,6 +289,25 @@ class TaskWindow(Adw.ApplicationWindow):
         elif not check.get_active() and task.completed:
             database.uncomplete_task(task.id)
             self.refresh()
+
+    def _on_clear_history(self, *_):
+        dialog = Adw.AlertDialog(
+            heading="Clear History",
+            body="Permanently delete all completed tasks? This cannot be undone.",
+        )
+        dialog.add_response("cancel", "Cancel")
+        dialog.add_response("clear", "Clear History")
+        dialog.set_response_appearance("clear", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.set_default_response("cancel")
+        dialog.set_close_response("cancel")
+        dialog.connect("response", self._on_clear_history_response)
+        dialog.present(self)
+
+    def _on_clear_history_response(self, dialog, response):
+        if response == "clear":
+            database.clear_history()
+            self.refresh()
+            self._show_toast("History cleared")
 
     def _on_toggle_reminder(self, btn, task: TaskObject):
         database.set_task_reminder(task.id, not task.reminder)
