@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.cairn</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  <name>Cairn</name>
+  <summary>A simple GNOME task manager</summary>
+
+  <description>
+    <p>
+      Cairn is a straightforward task manager for the GNOME desktop.
+      Create and track tasks with optional deadlines and reminders.
+      Completed tasks are archived in a history view and can be exported to CSV.
+    </p>
+    <ul>
+      <li>Create and manage tasks with deadlines</li>
+      <li>Per-task or global reminder schedules with repeat intervals</li>
+      <li>Project grouping with a searchable project picker</li>
+      <li>History view with CSV export</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">io.github.cairn.desktop</launchable>
+
+  <url type="homepage">https://github.com/cairn</url>
+  <url type="bugtracker">https://github.com/cairn/issues</url>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main task list</caption>
+      <image>https://example.com/screenshots/cairn-tasks.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Task history</caption>
+      <image>https://example.com/screenshots/cairn-history.png</image>
+    </screenshot>
+  </screenshots>
+
+  <content_rating type="oars-1.1" />
+
+  <releases>
+    <release version="1.0.0" date="2026-03-16">
+      <description>
+        <p>Initial release.</p>
+      </description>
+    </release>
+  </releases>
+
+  <developer id="io.github.cairn">
+    <name>Cairn contributors</name>
+  </developer>
+</component>
