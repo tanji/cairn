@@ -339,7 +339,7 @@ class TaskWindow(Adw.ApplicationWindow):
     def _on_about(self, *_):
         about = Adw.AboutDialog(
             application_name="Cairn",
-            version="1.0.0",
+            version="0.10.0",
             developer_name="Guillaume Lefranc",
             developers=["Guillaume Lefranc (tanji) https://github.com/tanji"],
             license_type=Gtk.License.MIT_X11,

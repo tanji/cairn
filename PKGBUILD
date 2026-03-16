@@ -1,6 +1,6 @@
 # Maintainer: Cairn contributors
 pkgname=cairn
-pkgver=1.0.0
+pkgver=0.10.0
 pkgrel=1
 pkgdesc="A simple GNOME task manager"
 arch=('any')
@@ -18,7 +18,7 @@ optdepends=(
     'libayatana-appindicator: system tray support'
 )
 makedepends=('meson' 'ninja')
-source=("$pkgname-$pkgver.tar.gz::file:///tmp/cairn-1.0.0.tar.gz")
+source=("$pkgname-$pkgver.tar.gz::file:///tmp/cairn-0.10.0.tar.gz")
 sha256sums=('SKIP')  # replace with real checksum for AUR
 
 build() {
