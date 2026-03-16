@@ -22,8 +22,8 @@
 
   <launchable type="desktop-id">io.github.cairn.desktop</launchable>
 
-  <url type="homepage">https://github.com/cairn</url>
-  <url type="bugtracker">https://github.com/cairn/issues</url>
+  <url type="homepage">https://github.com/tanji/cairn</url>
+  <url type="bugtracker">https://github.com/tanji/cairn/issues</url>
 
   <screenshots>
     <screenshot type="default">
