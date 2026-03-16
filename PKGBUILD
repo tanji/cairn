@@ -18,7 +18,7 @@ optdepends=(
     'libayatana-appindicator: system tray support'
 )
 makedepends=('meson' 'ninja')
-source=("$pkgname-$pkgver.tar.gz::file:///home/guillaume/taskapp")  # placeholder; replace with real URL/tag
+source=("$pkgname-$pkgver.tar.gz::file:///tmp/cairn-1.0.0.tar.gz")
 sha256sums=('SKIP')  # replace with real checksum for AUR
 
 build() {
