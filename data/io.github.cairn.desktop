@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Cairn
+Comment=A simple GNOME task manager
+Exec=cairn
+Icon=io.github.cairn
+Type=Application
+Categories=GNOME;GTK;Utility;
+StartupWMClass=io.github.cairn
+StartupNotify=true
