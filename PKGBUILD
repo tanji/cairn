@@ -4,7 +4,7 @@ pkgver=0.10.0
 pkgrel=1
 pkgdesc="A simple GNOME task manager"
 arch=('any')
-url="https://github.com/cairn"
+url="https://github.com/tanji/cairn"
 license=('MIT')
 depends=(
     'python'
@@ -18,8 +18,8 @@ optdepends=(
     'libayatana-appindicator: system tray support'
 )
 makedepends=('meson' 'ninja')
-source=("$pkgname-$pkgver.tar.gz::file:///tmp/cairn-0.10.0.tar.gz")
-sha256sums=('SKIP')  # replace with real checksum for AUR
+source=("$pkgname-$pkgver.tar.gz::https://github.com/tanji/cairn/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('03f367e17783eac8dcd528ce20893874d06491d514d9d55c7e95d7af389e532d')
 
 build() {
     cd "$srcdir/$pkgname-$pkgver"
