@@ -7,6 +7,7 @@ AUR_REMOTE="ssh://aur@aur.archlinux.org/${PKGNAME}.git"
 
 echo "Cloning AUR repo..."
 git clone "$AUR_REMOTE" "$TMPDIR"
+git -C "$TMPDIR" checkout -b master 2>/dev/null || git -C "$TMPDIR" checkout master
 
 echo "Copying PKGBUILD..."
 cp PKGBUILD "$TMPDIR/"
@@ -24,7 +25,7 @@ PKGREL=$(grep '^pkgrel=' PKGBUILD | cut -d= -f2)
 git commit -m "Update to ${PKGVER}-${PKGREL}"
 
 echo "Pushing to AUR..."
-git push
+git push origin master
 
 echo "Done. https://aur.archlinux.org/packages/${PKGNAME}"
 
