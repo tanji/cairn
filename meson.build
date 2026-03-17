@@ -31,8 +31,17 @@ cairn_script = configure_file(
 )
 
 # Desktop entry
+desktop_file = configure_file(
+  input: 'data/io.github.cairn.desktop.in',
+  output: 'io.github.cairn.desktop',
+  configuration: {
+    'bindir': get_option('prefix') / get_option('bindir'),
+    'datadir': get_option('prefix') / get_option('datadir'),
+  },
+)
+
 install_data(
-  'data/io.github.cairn.desktop',
+  desktop_file,
   install_dir: get_option('datadir') / 'applications',
 )
 
