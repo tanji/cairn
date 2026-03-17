@@ -1,6 +1,6 @@
 # Maintainer: Cairn contributors
 pkgname=cairn
-pkgver=0.10.0
+pkgver=0.10.1
 pkgrel=1
 pkgdesc="A simple GNOME task manager"
 arch=('any')
@@ -19,7 +19,7 @@ optdepends=(
 )
 makedepends=('meson' 'ninja')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/tanji/cairn/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('03f367e17783eac8dcd528ce20893874d06491d514d9d55c7e95d7af389e532d')
+sha256sums=('589122542ba801a47e1a1eccbdb882bbc785e15192416b2892649bd60cf692d1')
 
 build() {
     cd "$srcdir/$pkgname-$pkgver"

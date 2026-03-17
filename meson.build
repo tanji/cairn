@@ -1,4 +1,4 @@
-project('cairn', version: '0.10.0', meson_version: '>= 0.62.0')
+project('cairn', version: '0.10.1', meson_version: '>= 0.62.0')
 
 gnome = import('gnome')
 
