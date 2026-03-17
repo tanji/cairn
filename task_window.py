@@ -14,6 +14,8 @@ from task_editor import TaskEditorDialog
 from settings_dialog import SettingsDialog
 from exporter import export_history_to_csv
 
+APP_ID = "io.github.cairn"
+
 
 class TaskWindow(Adw.ApplicationWindow):
     __gtype_name__ = "TaskWindow"
@@ -21,8 +23,9 @@ class TaskWindow(Adw.ApplicationWindow):
     def __init__(self, app):
         super().__init__(application=app)
         self.set_title("Cairn")
+        self.set_icon_name(APP_ID)
         self.set_default_size(620, 680)
-        self.set_startup_id("io.github.cairn")
+        self.set_startup_id(APP_ID)
 
         self._toast_overlay = Adw.ToastOverlay()
         self.set_content(self._toast_overlay)

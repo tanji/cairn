@@ -15,11 +15,14 @@ from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 import database
 import reminders
 
+APP_ID = "io.github.cairn"
+APP_NAME = "Cairn"
+
 
 class TaskApp(Adw.Application):
     def __init__(self):
         super().__init__(
-            application_id="io.github.cairn",
+            application_id=APP_ID,
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
         )
         self._window = None
@@ -37,6 +40,8 @@ class TaskApp(Adw.Application):
         if os.path.isdir(_icons_dir):
             icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
             icon_theme.add_search_path(_icons_dir)
+
+        Gtk.Window.set_default_icon_name(APP_ID)
 
         from task_window import TaskWindow
 
@@ -140,6 +145,8 @@ class TaskApp(Adw.Application):
 
 
 def main():
+    GLib.set_prgname(APP_ID)
+    GLib.set_application_name(APP_NAME)
     database.init_db()
     app = TaskApp()
     return app.run(sys.argv)
